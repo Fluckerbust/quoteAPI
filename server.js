@@ -45,18 +45,18 @@ app.post('/api/quotes', (req, res, next) => {
     const quote = req.query.quote
     const person = req.query.person
     const newQuoteAdd = {quote:quote, person:person}
-    function pushQuote ()  {
-        quotes.push(newQuoteAdd);
+    function pushQuote (quoteText, attribution)  {
+        quotes.push({quote:quoteText, person:attribution});
     }
     
-    if(newQuoteAdd){
+    if(quote && person){
         console.log(quote)
     console.log(person)
-    console.log(newQuoteAdd)
-        pushQuote();
-        res.status(201).send(newQuoteAdd);
+    console.log(quote, person)
+        pushQuote({quote, person});
+        res.status(201).send({quote:quote, person:person});
     } else {
-        res.status().send('ya, wrong')
+        res.status(400).send("There was an error processing the request. Please try again.")
     }
 });
 
